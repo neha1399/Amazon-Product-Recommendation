@@ -1,6 +1,13 @@
+import os
 import pandas as pd
 import numpy as np
 import glob
+from visualizations import create_all_visualizations  # Import the visualization functions
+
+# Ensure the output directory exists
+output_dir = 'output'
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
 # Function to process a single dataset
 def process_dataset(file_path, name_max_length=30):
@@ -42,13 +49,11 @@ if all_product_ratings:
     combined_product_ratings = pd.concat(all_product_ratings, ignore_index=True)
     
     # Calculate average ratings by category and format to 2 decimals
-    # Calculate average ratings by category and format to 2 decimals
-    avg_ratings_by_category = combined_product_ratings.groupby('main_category')['ratings'].agg('mean').round(2)
-
+    avg_ratings_by_category = combined_product_ratings.groupby('main_category')['ratings'].mean().round(2)
     
     # Calculate most rated category based on the sum of ratings count
     combined_product_ratings['no_of_ratings'] = pd.to_numeric(combined_product_ratings['no_of_ratings'], errors='coerce')
-    most_rated_category = combined_product_ratings.groupby('main_category')['no_of_ratings'].sum().idxmax()
+    total_ratings_by_category = combined_product_ratings.groupby('main_category')['no_of_ratings'].sum()
     
     # Get top 5 products for each category and format the ratings to 2 decimals
     top_5_by_category = combined_product_ratings.sort_values(by=['main_category', 'ratings'], ascending=[True, False]) \
@@ -56,9 +61,14 @@ if all_product_ratings:
     top_5_by_category['ratings'] = top_5_by_category['ratings'].round(2)
     
     # Save results
-    avg_ratings_by_category.to_csv('average_ratings_by_category.csv')
-    top_5_by_category.to_csv('top_5_by_category.csv', index=False)
+    avg_ratings_by_category.to_csv(f'{output_dir}/average_ratings_by_category.csv')
+    total_ratings_by_category.to_csv(f'{output_dir}/total_ratings_by_category.csv')
+    top_5_by_category.to_csv(f'{output_dir}/top_5_by_category.csv', index=False)
     
-    print(f"Data saved to CSV files: average_ratings_by_category.csv, top_5_by_category.csv")
+    print("CSV files saved to the output/ folder.")
+    
+    # Create visualizations
+    create_all_visualizations(avg_ratings_by_category, total_ratings_by_category, top_5_by_category)
+
 else:
-    print("No data to save.")
+    print("No data to save or visualize.")
