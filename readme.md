@@ -1,46 +1,79 @@
 # Amazon Product Ratings Analysis
 
-This project analyzes Amazon product ratings data from CSV files and generates a Word document with the results. The analysis includes calculating average ratings for each category, identifying top 5 rated products in each category, and determining the highest rated category.
+---
 
-## Requirements
+## Overview
 
-- Python 3.x
-- pandas
-- numpy
-- glob
+This project analyzes Amazon product ratings from multiple datasets and generates insights in both tabular and visual formats. The analysis includes:
 
-## Dataset
+1. **Average Ratings by Category**
+2. **Total Number of Ratings by Category**
+3. **Top 5 Products by Ratings in Each Category**
 
-The dataset used in this project is a collection of CSV files containing Amazon product ratings data. The dataset was obtained from the [Amazon Product Reviews Dataset on Kaggle](https://www.kaggle.com/snap/amazon-product-reviews-dataset).
+Additionally, the project creates interactive visualizations using Plotly to represent the data effectively.
 
-## Usage
+---
 
-1. Place Amazon product ratings CSV files in the "data" directory.
-2. Run the script using Python.
-3. A Word document will be generated with the analysis results, including:
-   - Average ratings for each category
-   - Top 5 rated products in each category
-   - Highest rated category
+## Features
 
-## Code Structure
+1. **Data Processing**:
+   - Combines multiple datasets of product ratings.
+   - Handles inconsistencies such as missing values or invalid data types.
+   - Ensures uniform column names across datasets.
 
-The code is organized in the following files:
+2. **Analysis**:
+   - Calculates average ratings for each category.
+   - Identifies the total number of ratings per category.
+   - Extracts the top 5 products by ratings for each category.
 
-- `analysis.py`: This is the main file that performs the analysis on the data.
-- `requirements.txt`: This file contains the list of Python packages required to run the code.
+3. **Visualizations**:
+   - **Bar Chart**: Average ratings by category.
+   - **Bar Chart**: Total number of ratings by category.
+   - **Table**: Top 5 products with their categories, ratings, and number of ratings.
+   - **Pie Chart**: Distribution of ratings across categories.
 
-## Analysis Steps
+---
 
-The analysis process involves the following steps:
+## Files
 
-1. Load Data from All CSV Files in the Folder: The code reads all CSV files from the "data" directory and concatenates them into one DataFrame.
-2. Clean the Data: The code cleans the data by replacing 'Get' with NaN and converting the 'ratings' column to numeric. It also drops rows with missing ratings or product names.
-3. Get the Top 5 Rated Products in Each Category: The code groups the cleaned DataFrame by 'main_category' and selects the top 5 rated products in each category.
-4. Find the Highest Rated Category: The code calculates the average rating for each category and identifies the highest rated category.
-5. It Create a CSV File with the Results
+1. **Scripts**:
+   - `analysis.py`: Main script for data analysis and visualization.
+   - `visualizations.py`: Contains functions to generate visualizations using Plotly.
 
-## Acknowledgments
+2. **Input**:
+   - CSV files containing Amazon product data, stored in the `data/` directory.
 
-- [pandas](https://pandas.pydata.org/): A powerful data manipulation library.
-- [numpy](https://numpy.org/): A library for the Python programming language, adding support for large, multi-dimensional arrays and matrices, along with a large collection of high-level mathematical functions to operate on these arrays.
-- [glob](https://docs.python.org/3/library/glob.html): A module that provides a function for matching file names with Unix shell-style wildcards.
+3. **Output**:
+   - CSV files saved in the `output/` directory:
+     - `average_ratings_by_category.csv`
+     - `total_ratings_by_category.csv`
+     - `top_5_by_category.csv`
+   - Interactive visualizations displayed in the browser.
+
+---
+
+## Visualizations
+
+1. **Bar Chart (Average Ratings)**:
+   Displays the average ratings for each product category.
+
+2. **Bar Chart (Total Ratings)**:
+   Shows the total number of ratings for each category.
+
+3. **Table**:
+   Lists the top 5 rated products for each category, with columns:
+   - Product Name
+   - Category
+   - Rating
+   - Number of Ratings
+4. **Pie Chart (Ratings Distribution)**:
+   Illustrates the proportion of ratings contributed by each category. The highest-rated category is highlighted.
+---
+
+## Dependencies
+
+- **Pandas**: Data manipulation and processing.
+- **NumPy**: Numerical operations.
+- **Plotly**: Interactive visualizations.
+- **glob**: File pattern matching for multiple datasets
+- **OS**: File and directory management.
