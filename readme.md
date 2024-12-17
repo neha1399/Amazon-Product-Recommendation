@@ -37,12 +37,10 @@ The analysis process involves the following steps:
 2. Clean the Data: The code cleans the data by replacing 'Get' with NaN and converting the 'ratings' column to numeric. It also drops rows with missing ratings or product names.
 3. Get the Top 5 Rated Products in Each Category: The code groups the cleaned DataFrame by 'main_category' and selects the top 5 rated products in each category.
 4. Find the Highest Rated Category: The code calculates the average rating for each category and identifies the highest rated category.
-5. Create a Word Document with the Results: The code creates a Word document using the `docx` library. It adds headings and paragraphs with the analysis results.
+5. It Create a CSV File with the Results
 
 ## Acknowledgments
 
 - [pandas](https://pandas.pydata.org/): A powerful data manipulation library.
 - [numpy](https://numpy.org/): A library for the Python programming language, adding support for large, multi-dimensional arrays and matrices, along with a large collection of high-level mathematical functions to operate on these arrays.
-- [docx](https://python-docx.readthedocs.io/en/latest/): A library for creating and manipulating Word documents.
 - [glob](https://docs.python.org/3/library/glob.html): A module that provides a function for matching file names with Unix shell-style wildcards.
-- [os](https://docs.python.org/3/library/os.html): A module that provides a portable way of using operating system-dependent functionality.
