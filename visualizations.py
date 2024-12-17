@@ -28,24 +28,34 @@ def create_all_visualizations(avg_ratings, total_ratings, top_5_by_category):
     fig2.update_layout(xaxis_title="Category", yaxis_title="Total Ratings")
     fig2.show()
 
-    # Third graph: Top 5 products for each category (Table Format)
+    # Third graph: Table for Top 5 Products by Category with Category as Header
+    table_data = []
+    categories = top_5_by_category['main_category'].unique()
+    
+    for category in categories:
+        # Add category heading
+        table_data.append([f"<b>{category}</b>", "", ""])  # Leave the other columns empty
+        
+        # Add products for the current category
+        category_data = top_5_by_category[top_5_by_category['main_category'] == category]
+        for _, row in category_data.iterrows():
+            table_data.append([row['name'], f"{row['ratings']:.2f}", int(row['no_of_ratings'])])
+
+    # Format table data for Plotly
+    formatted_table_data = list(zip(*table_data))  # Transpose rows into columns for Plotly
+    
     fig3 = go.Figure(
         data=[
             go.Table(
                 header=dict(
-                    values=["<b>Category</b>", "<b>Product Name</b>", "<b>Ratings</b>", "<b>Number of Ratings</b>"],
+                    values=["<b>Product Name</b>", "<b>Ratings</b>", "<b>Number of Ratings</b>"],
                     fill_color="lightblue",
                     align="center",
                     font=dict(color="black", size=12),
                 ),
                 cells=dict(
-                    values=[
-                        top_5_by_category['main_category'], 
-                        top_5_by_category['name'], 
-                        top_5_by_category['ratings'], 
-                        top_5_by_category['no_of_ratings']
-                    ],
-                    fill_color="lightgrey",
+                    values=formatted_table_data,
+                    fill_color=["white", "lightgrey"] * len(table_data),
                     align="center",
                     font=dict(color="black", size=11),
                 ),
@@ -64,8 +74,6 @@ def create_all_visualizations(avg_ratings, total_ratings, top_5_by_category):
         color=total_ratings.index,  # Different colors for each category
         color_discrete_sequence=px.colors.qualitative.Pastel  # Use the same color palette
     )
-
     # Add numbers on top of the pie chart slices (percentages and category names)
     fig4.update_traces(textinfo='percent+label', pull=[0.1 if x == total_ratings.idxmax() else 0 for x in total_ratings.index])
-    
     fig4.show()
